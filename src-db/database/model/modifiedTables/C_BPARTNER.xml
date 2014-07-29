@@ -21,10 +21,6 @@
         <default/>
         <onCreateDefault/>
       </column>
-      <column name="EM_RPF_ANTIGUEDAD" primaryKey="false" required="false" type="DECIMAL" autoIncrement="false">
-        <default/>
-        <onCreateDefault/>
-      </column>
       <column name="EM_RPF_PUESTO" primaryKey="false" required="false" type="VARCHAR" size="100" autoIncrement="false">
         <default/>
         <onCreateDefault/>
@@ -37,15 +33,23 @@
         <default/>
         <onCreateDefault/>
       </column>
-      <column name="EM_RPF_SALARIOBASE" primaryKey="false" required="false" type="DECIMAL" autoIncrement="false">
-        <default/>
-        <onCreateDefault/>
-      </column>
       <column name="EM_RPF_RIESGOPUESTO" primaryKey="false" required="false" type="VARCHAR" size="10" autoIncrement="false">
         <default/>
         <onCreateDefault/>
       </column>
-      <column name="EM_RPF_SALARIODIARIO" primaryKey="false" required="false" type="DECIMAL" autoIncrement="false">
+      <column name="EM_RPF_ANTIGUEDAD" primaryKey="false" required="false" type="VARCHAR" size="30" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="EM_RPF_SALARIOBASE" primaryKey="false" required="false" type="VARCHAR" size="30" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="EM_RPF_SALARIODIARIO" primaryKey="false" required="false" type="VARCHAR" size="30" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="EM_RPF_NUMEMPLEADO" primaryKey="false" required="false" type="VARCHAR" size="30" autoIncrement="false">
         <default/>
         <onCreateDefault/>
       </column>

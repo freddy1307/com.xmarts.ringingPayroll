@@ -36,8 +36,8 @@
 
 	INSERT INTO rpf_concept_line(
             rpf_concept_line_id, ad_client_id, ad_org_id, isactive, created, 
-            createdby, updated, updatedby, numempleado, concept, mnt_addictions, 
-            mnt_deductions, rpf_concept_id, num_dias)
+            createdby, updated, updatedby, concept, rpf_concept_id, numempleado, 
+            mnt_addictions, mnt_deductions, num_dias)
     VALUES (ad_sequence_nextno('rpf_concept_line_id'), ?, ?, 'Y', now(), 
             ?, now(), ?, ?, ?, ?, 
             ?, ?, ?);
@@ -47,13 +47,99 @@
     <Parameter name="adClientID"/>
     <Parameter name="adOrgID"/>
     <Parameter name="strUser"/>
-    <Parameter name="strUser2"/>
-    <Parameter name="numEmpleado"/>
+    <Parameter name="strUser2"/>  
     <Parameter name="concept"/>
-    <Parameter name="mntAddictions"/>
-    <Parameter name="mntDeductions"/>
     <Parameter name="rpfConceptID"/>
+    <Parameter name="numEmpleado"/>
+	<Parameter name="mntAddictions"/>
+    <Parameter name="mntDeductions"/>
     <Parameter name="numDias"/>
   </SqlMethod>
-																																																																																																																															          
+
+  <SqlMethod name="eliminar" type="preparedStatement" return="rowCount" connection="false" >
+    <SqlMethodComment></SqlMethodComment>
+    <Sql>
+      <![CDATA[
+
+	delete from rpf_concept_line where rpf_concept_id=?
+
+      ]]>
+     </Sql>
+    <Parameter name="rpfConceptID"/>
+  </SqlMethod>
+
+<SqlMethod name="uplo" type="preparedStatement" return="rowCount" connection="false" >
+    <SqlMethodComment></SqlMethodComment>
+     <Sql>
+      <![CDATA[
+
+  INSERT INTO rpf_empleados(
+            rpf_empleados_id, ad_client_id, ad_org_id, isactive, created, 
+            createdby, updated, updatedby, nombre, rfc, calle, noexterior, 
+            nointerior, colonia, localidad, municipio, estado, pais, cp, 
+            numempleado, curp, tiporegimen, numseguro, departamento, banco, 
+            fechainicio, antiguedad, puesto, tipocontracto, tipojornada, 
+            salariobase, riesgo, salariodiario, metodo, condiciones, moneda, 
+            formapago, numerocuenta,registropatronal)
+    VALUES (ad_sequence_nextno('rpf_empleados_id'), ?, ?, 'Y', now(), 
+            ?, now(), ?, ?, ?, ?, ?, 
+            ?, ?, ?, ?, ?, ?, ?, 
+            ?, ?, ?, ?, ?, ?, 
+            ?, ?, ?, ?, ?, 
+            ?, ?, ?, ?, ?, ?, 
+            ?, ?, ?);
+
+      ]]>
+     </Sql>
+    <Parameter name="adClientID"/>
+    <Parameter name="adOrgID"/>
+    <Parameter name="strUser"/>
+    <Parameter name="strUser2"/>  
+    <Parameter name="nom"/>
+    <Parameter name="r"/>
+    <Parameter name="cal"/>
+    <Parameter name="noext"/>
+    <Parameter name="noint"/>
+    <Parameter name="col"/>
+    <Parameter name="loc"/>
+    <Parameter name="munic"/>
+    <Parameter name="est"/>
+    <Parameter name="pa"/>
+    <Parameter name="cp"/>
+    <Parameter name="numemp"/>
+    <Parameter name="cu"/>
+    <Parameter name="tiporegi"/>
+    <Parameter name="numsegu"/>
+    <Parameter name="depar"/>
+    <Parameter name="ban"/>
+    <Parameter name="fechaini"/>
+    <Parameter name="antigue"/>
+    <Parameter name="pues"/>
+    <Parameter name="tipocon"/>
+    <Parameter name="tipojor"/>
+    <Parameter name="salarioba"/>
+    <Parameter name="ries"/>
+    <Parameter name="salariodi"/>
+    <Parameter name="meto"/>
+    <Parameter name="condici"/>
+    <Parameter name="mon"/>
+    <Parameter name="formap"/>
+    <Parameter name="numerocu"/>
+    <Parameter name="regis"/>
+  </SqlMethod>
+
+			<SqlMethod name="elim" type="preparedStatement" return="rowCount" connection="false" >
+    <SqlMethodComment></SqlMethodComment>
+    <Sql>
+      <![CDATA[
+
+  delete from rpf_empleados;
+
+      ]]>
+     </Sql>
+  </SqlMethod>
+
+
+
+
  </SqlClass>

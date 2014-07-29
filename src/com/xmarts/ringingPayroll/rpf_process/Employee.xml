@@ -1,0 +1,27 @@
+<!--
+************************************************************************************ 
+* Copyright (C) 2009 Openbravo S.L.U. 
+* Licensed under the Openbravo Commercial License version 1.0 
+* You may obtain a copy of the License at http://www.openbravo.com/legal/obcl.html 
+************************************************************************************
+-->
+<REPORT>
+    <template file="Employee.html"/>
+    <PARAMETER id="paramKey" name="key" default="" attribute="value"/>
+    <PARAMETER id="window" name="window" default="" attribute="value"/>
+    <PARAMETER id="tab" name="tab" default="" attribute="value"/>
+    <PARAMETER id="paramProcessed" name="processed" attribute="value" default=""/>
+    <PARAMETER id="paramPath" name="path" attribute="value" default=""/>
+    <PARAMETER id="paramPosted" name="posted" attribute="value" default=""/>
+    <PARAMETER id="paramDocNo" name="docNo" attribute="value" default=""/>
+
+    <PARAMETER id="paramLanguage" name="language" default=""/>
+    <PARAMETER id="paramDirectory" name="directory" default=""/>
+    <PARAMETER id="paramCSS" name="theme" attribute="href" replace="Default"/>
+
+    <PARAMETER id="messageBoxID" name="messageType" attribute="class" replace="yy" default="HIDDEN"/>
+    <PARAMETER id="messageBoxIDTitle" name="messageTitle" default=""/>
+    <PARAMETER id="messageBoxIDMessage" name="messageMessage" default=""/>
+
+    <DISCARD id="discard"/>
+</REPORT>

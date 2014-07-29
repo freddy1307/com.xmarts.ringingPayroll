@@ -33,23 +33,27 @@
         <default/>
         <onCreateDefault/>
       </column>
-      <column name="NUMEMPLEADO" primaryKey="false" required="false" type="DECIMAL" autoIncrement="false">
-        <default/>
-        <onCreateDefault/>
-      </column>
       <column name="CONCEPT" primaryKey="false" required="false" type="VARCHAR" size="1000" autoIncrement="false">
         <default/>
         <onCreateDefault/>
       </column>
-      <column name="MNT_ADDICTIONS" primaryKey="false" required="false" type="DECIMAL" autoIncrement="false">
+      <column name="RPF_CONCEPT_ID" primaryKey="false" required="true" type="VARCHAR" size="32" autoIncrement="false">
         <default/>
         <onCreateDefault/>
       </column>
-      <column name="MNT_DEDUCTIONS" primaryKey="false" required="false" type="DECIMAL" autoIncrement="false">
-        <default><![CDATA[0]]></default>
+      <column name="NUMEMPLEADO" primaryKey="false" required="false" type="VARCHAR" size="10" autoIncrement="false">
+        <default/>
         <onCreateDefault/>
       </column>
-      <column name="RPF_CONCEPT_ID" primaryKey="false" required="true" type="VARCHAR" size="32" autoIncrement="false">
+      <column name="MNT_ADDICTIONS" primaryKey="false" required="false" type="VARCHAR" size="10" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="MNT_DEDUCTIONS" primaryKey="false" required="false" type="VARCHAR" size="10" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="NUM_DIAS" primaryKey="false" required="false" type="VARCHAR" size="10" autoIncrement="false">
         <default/>
         <onCreateDefault/>
       </column>

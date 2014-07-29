@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+  <database name="TRIGGER RPF_EMPLOYEE_TGR">
+    <trigger name="RPF_EMPLOYEE_TGR" table="RPF_EMPLEADOS" fires="after" insert="true" update="false" delete="false" foreach="row">
+      <body><![CDATA[CBID VARCHAR(32);
+CBIDP VARCHAR(32);
+CBLOC VARCHAR(32);
+CBPGRO VARCHAR(32);
+CBBAN VARCHAR(32);
+BEGIN
+
+	CBID := ad_sequence_nextno('c_bpartner_id');
+
+
+	SELECT c_bp_group_id INTO CBPGRO FROM c_bp_group WHERE VALUE = 'EMPLEADO' OR VALUE = 'Empleado' AND AD_CLIENT_ID= :NEW.AD_CLIENT_ID LIMIT 1;
+
+	IF CBPGRO IS NULL THEN
+		RAISE NO_DATA_FOUND;
+	END IF;
+--RAISE EXCEPTION'%','entro'||:NEW.fechainicio;
+
+	INSERT INTO c_bpartner(
+            c_bpartner_id, ad_client_id, ad_org_id, isactive, created, createdby, 
+            updated, updatedby, value, name, name2, description, issummary, 
+            c_bp_group_id, isonetime, isprospect, isvendor, iscustomer, isemployee,issalesrep,showpriceinorder
+            ,customer_blocking, vendor_blocking, 
+            so_payment_blocking, po_payment_blocking, so_invoice_blocking, 
+            po_invoice_blocking, so_order_blocking, po_order_blocking, so_goods_blocking, 
+            po_goods_blocking, iscashvat, 
+            em_rpf_registropatronal, 
+            em_rpf_tiporegimen, em_rpf_numseguro, em_rpf_departamento, em_rpf_fechainicio, 
+            em_rpf_antiguedad, em_rpf_puesto, em_rpf_tipocontracto, em_rpf_tipojornada, 
+            em_rpf_salariobase, em_rpf_riesgopuesto, em_rpf_salariodiario,em_rpf_numempleado,TaxID,EM_HCMC_Iddocument)
+    VALUES (CBID, :NEW.AD_CLIENT_ID, :NEW.AD_ORG_ID, 'Y', NOW(), :NEW.CREATEDBY, 
+            NOW(), :NEW.CREATEDBY, :NEW.NOMBRE, :NEW.NOMBRE, :NEW.NOMBRE, null, 'N', 
+            CBPGRO, 'N', 'N', 'N', 'N', 'Y','Y','N',
+            'N','N',
+            'N','N','N',
+            'N','N','N','N',
+            'N','N', 
+            :NEW.registropatronal, 
+            :NEW.tiporegimen, :NEW.numseguro, :NEW.departamento, TO_DATE(:NEW.fechainicio), 
+            :NEW.antiguedad, :NEW.PUESTO, :NEW.tipocontracto, :NEW.tipojornada, 
+            :NEW.salariobase, :NEW.riesgo, :NEW.salariodiario,:NEW.numempleado,:NEW.rfc,:NEW.curp);
+
+	CBLOC := ad_sequence_nextno('c_location_id');
+
+	INSERT INTO c_location(
+            c_location_id, ad_client_id, ad_org_id, isactive, created, createdby, 
+            updated, updatedby, address1, address2, city, postal, postal_add, 
+            c_country_id, c_region_id, c_city_id, regionname, em_cfdi_calle, 
+            em_cfdi_noint, em_cfdi_noext, em_cfdi_colonia, em_cfdi_localidad, 
+            em_cfdi_referencia, em_cfdi_municipio, em_cfdi_zonafront, em_opcrm_ad_user_id, em_rpf_estado)
+	VALUES (CBLOC, :NEW.AD_CLIENT_ID, :NEW.AD_ORG_ID, 'Y', NOW(), :NEW.CREATEDBY,  
+            NOW(), :NEW.CREATEDBY, :NEW.calle, :NEW.colonia, :new.municipio, :new.cp, null, 
+            '247', null, null, null, :NEW.calle, 
+            :new.nointerior, :new.noexterior, :new.colonia, :new.localidad, 
+            null, :new.municipio, null, null, :new.estado);
+
+	CBIDP := ad_sequence_nextno('c_bpartner_location_id');
+
+	INSERT INTO c_bpartner_location(
+            c_bpartner_location_id, ad_client_id, ad_org_id, isactive, created, 
+            createdby, updated, updatedby, name, isbillto, isshipto, ispayfrom, 
+            isremitto, phone, phone2, fax, c_salesregion_id, c_bpartner_id, 
+            c_location_id, istaxlocation, upc, em_hcmc_comments, em_hcmc_isdefault, 
+            em_hcmc_isbusiness, em_hcmc_makedefault)
+	VALUES (CBIDP, :NEW.AD_CLIENT_ID, :NEW.AD_ORG_ID, 'Y', NOW(),  
+            :NEW.CREATEDBY, NOW(), :NEW.CREATEDBY, 'Direccion para el timbrado de nomina', 'N', 'N', 'N', 
+            'N', null, null, null, null, CBID, 
+            CBLOC, 'N', null, null, null, 
+            null, null);
+
+	CBBAN := ad_sequence_nextno(' c_bp_bankaccount_id');
+
+	
+	INSERT INTO c_bp_bankaccount(
+            c_bp_bankaccount_id, ad_client_id, ad_org_id, created, updated, 
+            isactive, createdby, updatedby, c_bpartner_id, bankaccounttype, 
+            routingno, accountno, creditcardtype, creditcardnumber, creditcardexpmm, 
+            creditcardexpyy, a_name, a_street, a_city, a_state, a_zip, a_ident_dl, 
+            a_email, a_ident_ssn, r_avszip, a_country, ad_user_id, bank_name, 
+            iban, showaccountno, showiban, displayedaccount, c_country_id, 
+            swiftcode, bankformat, em_hcmc_accountname, em_hcmc_isdefault, 
+            em_hcmc_swift, em_hcmc_makedefault, em_hcmc_accounttype, em_rpf_method, 
+            em_rpf_condic, em_rpf_currency, em_rpf_form)
+    VALUES (CBBAN, :NEW.AD_CLIENT_ID, :NEW.AD_ORG_ID, NOW(), NOW(), 
+            'Y' ,:NEW.CREATEDBY, :NEW.CREATEDBY, CBID, NULL
+            ,NULL, :NEW.numerocuenta, NULL, NULL, NULL, 
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, 
+            NULL, NULL, NULL, NULL, NULL, null, 
+            null, 'Y', 'N', null, null, 
+            null, 'GENERIC', :NEW.numerocuenta, 'Y', 
+            null, null, 'D', :new.metodo, 
+            :new.condiciones, :new.moneda, :new.formapago);
+	--select * from c_bp_bankaccount where c_bp_bankaccount_id='5D77AA34B4A54F5F86DA5DC8501B989F'
+	
+RETURN NEW;
+
+END RPF_EMPLOYEE_TGR
+]]></body>
+    </trigger>
+  </database>

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
-  <database name="TABLE RPF_PAYROLL">
-    <table name="RPF_PAYROLL" primaryKey="RPF_PAYROLL_ID">
-      <column name="RPF_PAYROLL_ID" primaryKey="true" required="true" type="VARCHAR" size="32" autoIncrement="false">
+  <database name="TABLE RPF_UPLOAD_EMP">
+    <table name="RPF_UPLOAD_EMP" primaryKey="RPF_UPLOAD_EMP_ID">
+      <column name="RPF_UPLOAD_EMP_ID" primaryKey="true" required="true" type="VARCHAR" size="32" autoIncrement="false">
         <default/>
         <onCreateDefault/>
       </column>
@@ -33,38 +33,22 @@
         <default/>
         <onCreateDefault/>
       </column>
-      <column name="NAME" primaryKey="false" required="true" type="VARCHAR" size="100" autoIncrement="false">
+      <column name="NAME" primaryKey="false" required="false" type="VARCHAR" size="100" autoIncrement="false">
         <default/>
         <onCreateDefault/>
       </column>
-      <column name="DATE_INITIAL" primaryKey="false" required="true" type="TIMESTAMP" size="7" autoIncrement="false">
+      <column name="UPLOAD" primaryKey="false" required="false" type="CHAR" size="1" autoIncrement="false">
         <default/>
         <onCreateDefault/>
       </column>
-      <column name="DATE_END" primaryKey="false" required="true" type="TIMESTAMP" size="7" autoIncrement="false">
+      <column name="VALIDATION" primaryKey="false" required="false" type="CHAR" size="1" autoIncrement="false">
         <default/>
         <onCreateDefault/>
       </column>
-      <column name="PERIODICITY" primaryKey="false" required="false" type="VARCHAR" size="60" autoIncrement="false">
-        <default/>
-        <onCreateDefault/>
-      </column>
-      <column name="ADD_EMPLOYEE" primaryKey="false" required="false" type="CHAR" size="1" autoIncrement="false">
-        <default><![CDATA[N]]></default>
-        <onCreateDefault/>
-      </column>
-      <column name="ADD_CONCEPTS" primaryKey="false" required="false" type="CHAR" size="1" autoIncrement="false">
-        <default><![CDATA[N]]></default>
-        <onCreateDefault/>
-      </column>
-      <column name="STAMP" primaryKey="false" required="false" type="CHAR" size="1" autoIncrement="false">
-        <default><![CDATA[N]]></default>
-        <onCreateDefault/>
-      </column>
-      <foreign-key foreignTable="AD_CLIENT" name="RPF_PAYROLL_CLIENT_FKEY">
+      <foreign-key foreignTable="AD_CLIENT" name="RPF_UPLOAD_CLIENT">
         <reference local="AD_CLIENT_ID" foreign="AD_CLIENT_ID"/>
       </foreign-key>
-      <foreign-key foreignTable="AD_ORG" name="RPF_PAYROLL_ORG_FKEY">
+      <foreign-key foreignTable="AD_ORG" name="RPF_UPLOAD_EMP_ORG">
         <reference local="AD_ORG_ID" foreign="AD_ORG_ID"/>
       </foreign-key>
     </table>

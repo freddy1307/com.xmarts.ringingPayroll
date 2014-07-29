@@ -52,13 +52,13 @@ import org.openbravo.xmlEngine.XmlDocument;
 
 import jxl.*; 
 import java.io.*; 
-import com.xmarts.ringingPayroll.RPFConcept;
+import com.xmarts.ringingPayroll.RPFUploadEmp;
 import org.openbravo.model.ad.system.Client;
 import org.openbravo.model.common.enterprise.Organization;
 import org.openbravo.model.ad.access.User;
 
 
-public class Upload extends HttpSecureAppServlet {
+public class Employee extends HttpSecureAppServlet {
   private static final long serialVersionUID = 1L;
   //private FileGeneration fileGeneration = new FileGeneration();
 
@@ -75,38 +75,38 @@ public class Upload extends HttpSecureAppServlet {
     VariablesSecureApp vars = new VariablesSecureApp(request);
 
     if (vars.commandIn("DEFAULT")) {
-      String strKey = vars.getGlobalVariable("inprpfConceptId", "Upload|RPF_Concept_ID");
+      String strKey = vars.getGlobalVariable("inprpfUploadEmpId", "Employee|RPF_Upload_Emp_ID");
       System.out.println("Clave Default:" + strKey);
-      String strWindowId = vars.getGlobalVariable("inpwindowId", "Upload|windowId");
-      String strTabId = vars.getGlobalVariable("inpTabId", "Upload|tabId");
-      String strProcessId = vars.getGlobalVariable("inpProcessed", "Upload|processId", "");
-      String strPath = vars.getGlobalVariable("inpPath", "Upload|path", strDireccion
+      String strWindowId = vars.getGlobalVariable("inpwindowId", "Employee|windowId");
+      String strTabId = vars.getGlobalVariable("inpTabId", "Employee|tabId");
+      String strProcessId = vars.getGlobalVariable("inpProcessed", "Employee|processId", "");
+      String strPath = vars.getGlobalVariable("inpPath", "Employee|path", strDireccion
           + request.getServletPath());
       String strPosted = null;
-      String strUploadd = "N";
-      String strDocNo = vars.getRequestGlobalVariable("inpdocumentno", "Upload|docNo");
+      String strEmployeed = "N";
+      String strDocNo = null;
       String strWindowPath = Utility.getTabURL(this, strTabId, "E");
       if (strWindowPath.equals(""))
         strWindowPath = strDefaultServlet; 
 
-      if (strUploadd.equals("Y"))
+      if (strEmployeed.equals("Y"))
 	advisePopUp(request, response, Utility.messageBD(this, "ERROR", vars.getLanguage()),
-	    Utility.messageBD(this, "CFDI_Upload", vars.getLanguage()));
+	    Utility.messageBD(this, "CFDI_Employee", vars.getLanguage()));
 
       printPage(response, vars, strKey, strWindowId, strTabId, strProcessId, strPath, strPosted,
           strWindowPath, strDocNo);
 
     } else if (vars.commandIn("SAVE")) {
 
-      String strKey = vars.getGlobalVariable("inprpfConceptId", "Upload|RPF_Concept_ID");
-      String strWindowId = vars.getRequestGlobalVariable("inpwindowId", "Upload|windowId");
-      String strTabId = vars.getRequestGlobalVariable("inpTabId", "Upload|tabId");
-      String strProcessId = vars.getRequestGlobalVariable("inpProcessed", "Upload|processId");
-      String strPath = vars.getRequestGlobalVariable("inpPath", "Upload|path");
+      String strKey = vars.getGlobalVariable("inprpfUploadEmpId", "Employee|RPF_Upload_Emp_ID");
+      String strWindowId = vars.getRequestGlobalVariable("inpwindowId", "Employee|windowId");
+      String strTabId = vars.getRequestGlobalVariable("inpTabId", "Employee|tabId");
+      String strProcessId = vars.getRequestGlobalVariable("inpProcessed", "Employee|processId");
+      String strPath = vars.getRequestGlobalVariable("inpPath", "Employee|path");
       String strPosted = null;
-      String strDocNo = vars.getRequestGlobalVariable("inpdocumentno", "Upload|docNo");
+      String strDocNo = null;
       String strWindowPath = Utility.getTabURL(this, strTabId, "E");
-      String strFilePath = vars.getRequestGlobalVariable("inpFilePath", "Upload|FileName");
+      String strFilePath = vars.getRequestGlobalVariable("inpFilePath", "Employee|FileName");
 
       if (strWindowPath.equals(""))
         strWindowPath = strDefaultServlet;
@@ -126,10 +126,10 @@ public class Upload extends HttpSecureAppServlet {
       String windowId, String strTab, String strProcessId, String strPath, String strPosted,
       String strFilePath, String strDocNo) throws IOException, ServletException {
     if (log4j.isDebugEnabled())
-      log4j.debug("Output: Button process Upload Electronic Invoice");
+      log4j.debug("Output: Button process Employee Electronic Invoice");
 //System.out.println("metodo prong");
     String[] discard = { "" };
-    XmlDocument xmlDocument = xmlEngine.readXmlTemplate("com/xmarts/ringingPayroll/rpf_process/Upload", discard).createXmlDocument();
+    XmlDocument xmlDocument = xmlEngine.readXmlTemplate("com/xmarts/ringingPayroll/rpf_process/Employee", discard).createXmlDocument();
     xmlDocument.setParameter("key", strKey);
     xmlDocument.setParameter("window", windowId);
     xmlDocument.setParameter("tab", strTab);
@@ -139,8 +139,8 @@ public class Upload extends HttpSecureAppServlet {
     xmlDocument.setParameter("docNo", strDocNo);
 
     {
-      OBError myMessage = vars.getMessage("Upload");
-      vars.removeMessage("Upload");
+      OBError myMessage = vars.getMessage("Employee");
+      vars.removeMessage("Employee");
       if (myMessage != null) {
         xmlDocument.setParameter("messageType", myMessage.getType());
         xmlDocument.setParameter("messageTitle", myMessage.getTitle());
@@ -183,7 +183,7 @@ public class Upload extends HttpSecureAppServlet {
        }
       System.out.println("Ruta del id divido "+r);
         
-      String strDireccion = globalParameters.strFTPDirectory+"/"+"06D8871F1C124F4B93722C0742B2604A"+"/"+r;
+      String strDireccion = globalParameters.strFTPDirectory+"/"+"06D7B5E8C9D54AB28DA8CBD95D30F833"+"/"+r;
       
       System.out.println("Direccion del attachments "+strDireccion);
 
@@ -199,7 +199,7 @@ public class Upload extends HttpSecureAppServlet {
       String archivoDestino = strDireccion+archivo;
       System.out.println("Nombre del archivo "+archivoDestino);
 
-      RPFConcept rpfcon = OBDal.getInstance().get(RPFConcept.class, strKey);
+      RPFUploadEmp rpfcon = OBDal.getInstance().get(RPFUploadEmp.class, strKey);
 
       Client client = rpfcon.getClient();
       String clien = client.getId();
@@ -213,7 +213,6 @@ public class Upload extends HttpSecureAppServlet {
       String use = user.getId();
       System.out.println("User "+use);
 
-
       try { 
             Workbook archivoExcel = Workbook.getWorkbook(new File( 
             archivoDestino)); 
@@ -223,14 +222,14 @@ public class Upload extends HttpSecureAppServlet {
                     Sheet hoja = archivoExcel.getSheet(sheetNo); 
                     int numColumnas = hoja.getColumns();
                     System.out.println("Columnas "+numColumnas);
-                    if(numColumnas >= 6){
+                    if(numColumnas >= 32){
                         //System.out.println("El excel tiene mas columnas de las requeridas, favor de validarlo");
                         myMessage.setMessage("El excel tiene mas columnas de las requeridas, favor de validarlo");
                         myMessage.setType("Error");
                         myMessage.setTitle(Utility.messageBD(new DalConnectionProvider(), "Error", OBContext.getOBContext().getLanguage().getLanguage()));
                        return myMessage; 
                     }else{
-                        if(numColumnas <= 4){
+                        if(numColumnas <= 30){
                          //System.out.println("El excel tiene menos columnas de las requeridas, favor de validarlo");
                          myMessage.setMessage("El excel tiene menos columnas de las requeridas, favor de validarlo");
                          myMessage.setType("Error");
@@ -241,60 +240,155 @@ public class Upload extends HttpSecureAppServlet {
                             System.out.println("Filas "+numFilas);
                             String data; 
                             System.out.println("Nombre de la Hoja\t"+ archivoExcel.getSheet(sheetNo).getName()); 
-                            UploadData.eliminar(this,strKey);
+                            UploadData.elim(this);
                             System.out.println("Borrando lineas antes cargardas");
                             for (int fila = 0; fila < numFilas; fila++) { // Recorre cada 
                             // fila de la  hoja 
+                                        String nom=null;
+                                    String rfc=null;
+                                    String calle=null;
+                                    String noext=null;
+                                    String noint=null;
+                                    String col=null;
+                                    String loc=null;
+                                    String mun=null;
+                                    String est=null;
+                                    String pais=null;
+                                    String cp=null;
+                                    String regis=null;
                                     String num=null;
-                                    String con=null;
-                                    String percep=null;
-                                    String deducci=null;
-                                    String dias=null;
+                                    String curp=null;
+                                    String tiporeg=null;
+                                    String numseg=null;
+                                    String depa=null;
+                                    String banco=null;
+                                    String fechaini=null;
+                                    String antigue=null;
+                                    String puesto=null;
+                                    String tipocon=null;
+                                    String tipojor=null;
+                                    String salariob=null;
+                                    String riesgo=null;
+                                    String salariod=null;
+                                    String met=null;
+                                    String cond=null;
+                                    String mon=null;
+                                    String forma=null;
+                                    String numcuenta=null;
                                     for (int columna = 0; columna < numColumnas; columna++) { // Recorre                                                                                
                                         // cada columna de la fila 
                                         data = hoja.getCell(columna, fila).getContents();
-                                        if(columna == 0){
-                                            num = data;
-                                        }else{
-                                            if(columna == 1){
-                                                con = data;
-                                            }else{
-                                                if(columna == 2){
-                                                      if(data.equals("")){
-                                                          percep="0";
-                                                      }else{
-                                                          percep=data;
-                                                      }
-                                                }else{
-                                                    if(columna == 3){
-                                                        if(data.equals("")){
-                                                          deducci = "0";
-                                                        }else{
-                                                          deducci = data;
-                                                        } 
-                                                    }else{
-                                                        if(columna == 4){
-                                                            dias = data;
-                                                        }
-                                                    }
-                                                }
-                                            }
+                                        if(columna == 0){  
+                                           nom = data;
                                         }
+                                        if(columna == 1){
+                                           rfc = data;
+                                        }
+                                        if(columna == 2){
+                                           calle=data; 
+                                        }
+                                        if(columna == 3){
+                                           noext = data; 
+                                        }
+                                        if(columna == 4){
+                                           noint = data;
+                                        }
+                                        if(columna == 5){
+                                           col = data;
+                                        }
+                                        if(columna == 6){
+                                           loc = data;
+                                        }
+                                        if(columna == 7){
+                                           mun = data;
+                                        }
+                                        if(columna== 8){
+                                           est = data;
+                                        }
+                                        if(columna== 9){
+                                           pais = data;                                      
+                                        }
+                                         if(columna== 10){
+                                           cp = data;                                      
+                                        }
+                                        if(columna== 11){
+                                           regis = data;                                      
+                                        }
+                                        if(columna== 12){
+                                           num = data;                                      
+                                        }
+                                         if(columna== 13){
+                                           curp = data;                                      
+                                        }
+                                        if(columna== 14){
+                                           tiporeg = data;                                      
+                                        }
+                                        if(columna== 15){
+                                           numseg = data;                                      
+                                        }
+                                        if(columna== 16){
+                                           depa = data;                                      
+                                        }
+                                        if(columna== 17){
+                                           banco = data;                                      
+                                        }
+                                        if(columna== 18){
+                                           fechaini = data;                                      
+                                        }
+                                        if(columna== 19){
+                                           antigue = data;                                      
+                                        }
+                                        if(columna== 20){
+                                           puesto = data;                                      
+                                        }
+                                        if(columna== 21){
+                                           tipocon = data;                                      
+                                        }
+                                        if(columna== 22){
+                                           tipojor = data;                                      
+                                        }
+                                        if(columna== 23){
+                                           salariob = data;                                      
+                                        }
+                                        if(columna== 24){
+                                           riesgo = data;                                      
+                                        }
+                                        if(columna== 25){
+                                           salariod = data;                                      
+                                        }
+                                        if(columna== 26){
+                                           met = data;                                      
+                                        }
+                                        if(columna== 27){
+                                           cond = data;                                      
+                                        }
+                                        if(columna== 28){
+                                           mon = data;                                      
+                                        }
+                                        if(columna== 29){
+                                           forma = data;                                      
+                                        }
+                                        if(columna== 30){
+                                           numcuenta = data;                                      
+                                        }   
                                         //System.out.println(columna+" "+fila);
                                         //System.out.print(data + " ")1; 
-
                                     } 
-                                  if(num.equals("") && con.equals("")){
+                                  if(nom.equals("") && rfc.equals("") && calle.equals("")){
                                     System.out.println("entro al break");
                                     break;
                                   }else{       
-                                    System.out.println(num+" "+con+" "+percep+" "+deducci+" "+dias+"\n"); 
+                                    //System.out.println(num+" "+con+" "+percep+" "+deducci+" "+dias+"\n"); 
                                     System.out.println("Guardando datos");
-                                    UploadData.cargar(this,clien,org,use,use,con,strKey,num,percep,deducci,dias);
+                                    if(nom.equals("NombreEmpleado") && rfc.equals("RFC") && calle.equals("Calle")){
+                                      System.out.println("entro al encabezado :p");
+                                    }else{
+                                    UploadData.uplo(this,clien,org,use,use,nom,rfc,calle,noext,noint,col,loc,mun,est,pais,cp,num,curp,tiporeg,numseg,depa,banco,fechaini,antigue,puesto,tipocon,tipojor,salariob,riesgo,salariod,met,cond,mon,forma,numcuenta,regis);
                                     System.out.println("Termino de guardar la informacion");
+                                    }
                                   }
                             }
-                        }
+                        }//cierra el else de las columnas
                     } 
                 }
             } catch (Exception ioe) { 

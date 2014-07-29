@@ -41,31 +41,7 @@
         <default/>
         <onCreateDefault/>
       </column>
-      <column name="BANK" primaryKey="false" required="false" type="VARCHAR" size="100" autoIncrement="false">
-        <default/>
-        <onCreateDefault/>
-      </column>
-      <column name="METHOD" primaryKey="false" required="false" type="VARCHAR" size="100" autoIncrement="false">
-        <default/>
-        <onCreateDefault/>
-      </column>
-      <column name="FORM" primaryKey="false" required="false" type="VARCHAR" size="100" autoIncrement="false">
-        <default/>
-        <onCreateDefault/>
-      </column>
-      <column name="CONDICIONES" primaryKey="false" required="false" type="VARCHAR" size="100" autoIncrement="false">
-        <default/>
-        <onCreateDefault/>
-      </column>
-      <column name="MONEDA" primaryKey="false" required="false" type="VARCHAR" size="100" autoIncrement="false">
-        <default/>
-        <onCreateDefault/>
-      </column>
-      <column name="CTA_PAGO" primaryKey="false" required="false" type="VARCHAR" size="100" autoIncrement="false">
-        <default/>
-        <onCreateDefault/>
-      </column>
-      <column name="FOLIO" primaryKey="false" required="false" type="VARCHAR" size="100" autoIncrement="false">
+      <column name="DOCUMENTNO" primaryKey="false" required="false" type="VARCHAR" size="30" autoIncrement="false">
         <default/>
         <onCreateDefault/>
       </column>
@@ -98,6 +74,14 @@
         <onCreateDefault/>
       </column>
       <column name="RPF_PAYROLL_ID" primaryKey="false" required="true" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="QTY_ADDICTIONS" primaryKey="false" required="false" type="DECIMAL" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="QTY_DEDUCTIONS" primaryKey="false" required="false" type="DECIMAL" autoIncrement="false">
         <default/>
         <onCreateDefault/>
       </column>
